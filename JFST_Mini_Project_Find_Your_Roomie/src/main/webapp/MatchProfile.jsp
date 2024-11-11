@@ -13,7 +13,7 @@
 <body>
 <button type="button" class="btn-close" aria-label="Close" onclick="window.location.href='Matches.jsp';"></button>
 
-<% String email = session.getAttribute("email").toString(); %>
+<% String email = session.getAttribute("MatchEmail").toString(); %>
 
 <% DBConnect db = new DBConnect();
 User user = db.getUserDetails(email);%>

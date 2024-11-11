@@ -6,6 +6,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -28,9 +30,11 @@ public class Match extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username="khloe";
+		HttpSession session = request.getSession(false);
+		String email = session.getAttribute("email").toString();
+		System.out.println("Match.java "+email);
 		DBConnect db=new DBConnect();
-		User cur_user=db.getUserDetails(username);
+		User cur_user=db.getUserDetails(email);
 		Matching m=new Matching();
 		List<Pair> matches=m.getMatches(cur_user);
 		System.out.print(matches.size()>0);

@@ -46,17 +46,16 @@ public class DBConnect {
     }
     //user form code starts
     public boolean updateUserProfile(User updatedUser, String ogEmail) {
-    	String query="UPDATE users SET name = ?,username = ?, contact = ?, city = ?, area = ?, job = ?, email = ? WHERE email = ?";
+    	String query="UPDATE users SET contact = ?, city = ?, area = ?, job = ? WHERE email = ?";
     	try (Connection conn = getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(query)){
-    		pstmt.setString(1,updatedUser.getName());
-    		pstmt.setString(2,updatedUser.getUsername());
-    		pstmt.setString(3,updatedUser.getContact());
-    		pstmt.setString(4, updatedUser.getCity());
-    		pstmt.setString(5,updatedUser.getArea());
-    		pstmt.setString(6,updatedUser.getJob());
-    		pstmt.setString(7, updatedUser.getEmail());
-    		pstmt.setString(8,ogEmail);
+    		
+    		pstmt.setString(1,updatedUser.getContact());
+    		pstmt.setString(2, updatedUser.getCity());
+    		pstmt.setString(3,updatedUser.getArea());
+    		pstmt.setString(4,updatedUser.getJob());
+    		
+    		pstmt.setString(5,ogEmail);
     		
     		int rowsAffected=pstmt.executeUpdate();
     		return rowsAffected>0;
@@ -75,8 +74,10 @@ public class DBConnect {
     	        pstmt.setString(1, email);
     	        ResultSet rs = pstmt.executeQuery();
     	        if (rs.next()) {
-    	            return new User(
-    	                rs.getString("username"),
+    	        	System.out.println("rs.next: "+rs.getString("email"));
+    	        	
+    	            return new User(    	            	
+    	                rs.getString("email"),    	                
     	                rs.getString("name"),
     	                rs.getString("gender"),
     	                rs.getDate("dob"),
@@ -99,18 +100,19 @@ public class DBConnect {
     	
     }
     
-    public static List<User> getAllUsers(String username){
-    	String query="SELECT * FROM users WHERE status = ? AND username <> ?";
+    public static List<User> getAllUsers(String email){
+    	
+    	String query="SELECT * FROM users WHERE status = ? AND email <> ?";
     	
     	List<User> list=new ArrayList<>();
     	 try (Connection conn = getConnection();
     	         PreparedStatement pstmt = conn.prepareStatement(query)) {
     	        pstmt.setString(1, "active");
-    	        pstmt.setString(2, "khloe");
+    	        pstmt.setString(2, email);
     	        ResultSet rs = pstmt.executeQuery();
-    	        while (rs.next()) {
+    	        while(rs.next()) {
     	        	System.out.print(rs.getString("name"));
-    	            list.add( new User(
+    	            list.add(new User(
     	                rs.getString("email"),
     	                rs.getString("name"),
     	                rs.getString("gender"),
@@ -294,5 +296,5 @@ public class DBConnect {
         return false;
     }
     //login signup code ends here
-
+    
 }

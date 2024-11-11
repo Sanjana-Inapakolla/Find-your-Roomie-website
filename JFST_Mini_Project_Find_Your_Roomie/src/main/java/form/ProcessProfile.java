@@ -1,5 +1,7 @@
 package form;
 
+import authentication.DBConnect;
+import authentication.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -29,15 +31,15 @@ public class ProcessProfile extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 HttpSession session = request.getSession();  // Get the session
-	        String email = (String) session.getAttribute("email");  
-	     System.out.print(email);
+	       String matchEmail = (String) session.getAttribute("MatchEmail");  
+	     System.out.print(matchEmail);
 	        
 	        // Fetch the user details from the database
-	     /*   DbConnect db = new DbConnect();
-	        User user = db.getUserDetails(username);*/
+	     	DBConnect db = new DBConnect();
+	        User user = db.getUserDetails(matchEmail);
 	        
 	        // Set the user object as a request attribute
-	        request.setAttribute("email", email);
+	        request.setAttribute("email", matchEmail);
 	        
 	        // Forward the request to the JSP to display user profile
 	        request.getRequestDispatcher("/MatchProfile.jsp").forward(request, response);

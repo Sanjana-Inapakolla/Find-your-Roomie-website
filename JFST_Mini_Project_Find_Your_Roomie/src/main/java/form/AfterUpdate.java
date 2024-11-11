@@ -39,7 +39,7 @@ public class AfterUpdate extends HttpServlet {
 		String area=request.getParameter("area");
 		String job=request.getParameter("occupation");
 		
-		User updatedUser=new User(name,username,newemail,contact,city,area,job);
+		User updatedUser=new User(name,newemail,contact,city,area,job);
 		DBConnect db=new DBConnect();
 		
 		HttpSession session = request.getSession();

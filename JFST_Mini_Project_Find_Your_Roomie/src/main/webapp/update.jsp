@@ -112,10 +112,10 @@
 <h2>Update My Profile</h2>
 
  <label for="name">Name:</label>
- <input type="text" id="name" name="name" value="<%= request.getAttribute("name") %>" >
+ <input type="text" id="name" name="name" value="<%= request.getAttribute("name") %>" readonly>
  
  <label for="email">Email:</label>
- <input type="email" id="email" name="email" value="<%= request.getAttribute("email") %>" >
+ <input type="email" id="email" name="email" value="<%= request.getAttribute("email") %>" readonly>
  
  <label for="phone">Contact Number:</label>
  <input type="tel" id="phone" name="phone" value="<%= request.getAttribute("phone") %>">

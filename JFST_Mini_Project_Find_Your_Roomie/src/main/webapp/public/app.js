@@ -1,47 +1,25 @@
-/**
- * 
- */
-const map = L.map('map').setView([20.5937, 78.9629], 5); // Initialize map centered on India
-
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors'
+// Initialize the geocoder control with Nominatim for address search
+const geocoder = L.Control.Geocoder.nominatim();
+const searchControl = L.Control.geocoder({
+    geocoder: geocoder,
+    collapsed: false,
+    placeholder: 'Enter a city or area',
+    position: 'topright'  // Search bar in the top right
 }).addTo(map);
 
-// Function to fetch hostels using the Overpass API
-function fetchHostelsFromOverpass(lat, lon) {
-    // Adjust the radius (in meters) as needed
-    const radius = 10000; // 10 km radius around the user location
+// Listen for when a user selects a location from the search bar
+searchControl.on('markgeocode', function(e) {
+    const lat = e.geocode.center.lat;
+    const lon = e.geocode.center.lng;
 
-    // Overpass API query to fetch hostels around the user's location
-    const overpassURL = `https://overpass-api.de/api/interpreter?data=[out:json];node(around:${radius},${lat},${lon})[tourism=hostel];out;`;
+    // Center the map on the selected city
+    map.setView([lat, lon], 12);
 
-    fetch(overpassURL)
-        .then(response => response.json())
-        .then(data => {
-            if (data.elements.length === 0) {
-                console.log('No hostels found in this area.');
-            } else {
-                data.elements.forEach(hostel => {
-                    const lat = hostel.lat;
-                    const lon = hostel.lon;
-                    const name = hostel.tags.name || 'Unknown Hostel';
-                    const description = hostel.tags.description || 'No description available';
+    // Fetch hostels around the selected city
+    fetchHostelsFromOverpass(lat, lon);
+});
 
-                    // Add a marker for each hostel
-                    const marker = L.marker([lat, lon]).addTo(map);
-                    marker.bindPopup(`
-                        <b>${name}</b><br>
-                        ${description}<br>
-                        Latitude: ${lat}<br>
-                        Longitude: ${lon}
-                    `);
-                });
-            }
-        })
-        .catch(error => console.error('Error fetching data from Overpass API:', error));
-}
-
-// Geolocation to center the map on the user's location and fetch nearby hostels
+// Center map on user’s location and fetch hostels nearby
 map.locate({ setView: true, maxZoom: 12 });
 
 map.on('locationfound', function(e) {

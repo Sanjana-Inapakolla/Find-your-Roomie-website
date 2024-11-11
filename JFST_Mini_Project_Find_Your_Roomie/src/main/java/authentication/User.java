@@ -32,8 +32,8 @@ public class User {
         this.password = password;
         this.salt = salt;
     }
-    public User(String username, String name, String gender, java.sql.Date dob, String contact, int age, String city, String area, String job, String native_place, String mother_tongue, String smoke, String drink, String diet) {
-        this.username=username;
+    public User(String email, String name, String gender, java.sql.Date dob, String contact, int age, String city, String area, String job, String native_place, String mother_tongue, String smoke, String drink, String diet) {
+        this.email=email;
         this.name = name;
         this.gender = gender;
         this.dob = dob;
@@ -49,8 +49,8 @@ public class User {
         this.diet = diet;
     }
  // for matching
-    public  User(String username,String city,String area,String gender, int age, String smoke,String drink, String diet, String mother_tongue){
-        this.username=username;
+    public  User(String email,String city,String area,String gender, int age, String smoke,String drink, String diet, String mother_tongue){
+        this.email=email;
         this.city=city;
         this.area=area;
         this.gender=gender;
@@ -62,7 +62,7 @@ public class User {
     }
     
     //update profile
-    public User(String name,String username,String email,String contact,String city,String area,String job) {
+    public User(String name,String email,String contact,String city,String area,String job) {
     	this.name=name;
     	this.email=email;
     	this.contact=contact;
