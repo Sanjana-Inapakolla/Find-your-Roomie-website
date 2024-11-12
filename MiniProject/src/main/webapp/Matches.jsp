@@ -10,6 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matches</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -39,10 +40,18 @@
         .match-item p {
             color: #555;
         }
+         .btn-close {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 30px; 
+    height: 30px; 
+    font-size: 1.2rem;
+  }
     </style>
 </head>
 <body>
-
+<button type="button" class="btn-close" aria-label="Close" onclick="window.location.href='home.html';"></button>
 <div class="matches-container">
     <h2>List of Matches</h2>
 
@@ -79,6 +88,6 @@
         }
     %>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

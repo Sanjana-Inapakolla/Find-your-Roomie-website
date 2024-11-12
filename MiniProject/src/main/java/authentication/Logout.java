@@ -1,4 +1,4 @@
-package form;
+package authentication;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -8,19 +8,18 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.util.*;
 
 /**
- * Servlet implementation class Match
+ * Servlet implementation class Logout
  */
-@WebServlet("/Match")
-public class Match extends HttpServlet {
+@WebServlet("/LogoutServlet")
+public class Logout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Match() {
+    public Logout() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,20 +28,14 @@ public class Match extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		String email = session.getAttribute("email").toString();
-		System.out.println("Match.java "+email);
-		DbConnect db=new DbConnect();
-		User cur_user=db.getUserDetails(email);
-		Matching m=new Matching();
-		List<Pair> matches=m.getMatches(cur_user);
-		System.out.print(matches.size()>0);
-		System.out.print(matches.get(0).getUser().getName());
-		
-		request.setAttribute("matches", matches);
-		System.out.print("attribute set");
-		request.getRequestDispatcher("Matches.jsp").forward(request, response);
-		
+		// Get the current session and invalidate it
+        HttpSession session = request.getSession(false); // Use false to avoid creating a session if none exists
+        if (session != null) {
+            session.invalidate(); // Ends the session and removes all session attributes
+        }
+        
+        // Redirect to the login or home page after logout
+        response.sendRedirect("Login_signup.html");
 	}
 
 	/**

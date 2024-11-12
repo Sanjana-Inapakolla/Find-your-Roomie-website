@@ -10,11 +10,9 @@ public class Matching {
 		getMatches();
 	}*/
 
-    public List<Pair>  getMatches(User curUser
-    		){
+    public List<Pair>  getMatches(User curUser){
         DbConnect db = new DbConnect();
-        List<User> list = db.getAllUsers(curUser.getUsername());
-       // List<User> list = db.getAllUsers("khloe");
+        List<User> list = db.getAllUsers(curUser.getEmail());
         System.out.print(list.get(0).getName());
         List<Pair> matches = new ArrayList<>();
         System.out.print(list.size()>0);

@@ -7,7 +7,7 @@
   <style>
     /* Navbar Styling */
     .navbar {
-      background-color: #2a2f38; 
+      background-color: #80ced6; 
       padding: 1rem; 
     }
 
@@ -80,7 +80,7 @@
     }
 
     .find-roomie {
-      background-color: #007bff; 
+      background-color: #563f46; 
       color: white;
       border: none;
     }
@@ -90,7 +90,7 @@
     }
 
     .find-hostel {
-      background-color: #28a745; 
+      background-color: #563f46; 
       color: white;
       border: none;
     }
@@ -107,13 +107,17 @@
     .card-img-top {
       border-radius: 10px 10px 0 0;
     }
+    
+    body{
+      background-color: #fefbd8;
+    }
   </style>
 </head>
 <body>
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg">
-  <div class="container-fluid">
+  <div class="container-fluid" style="background-color: #618685;">
     <a class="navbar-brand" href="#">Find Your Roomie</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -121,13 +125,13 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="Profile">About</a>
+          <a class="nav-link active" aria-current="page" href="About.jsp">About</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Reviews</a>
+          <a class="nav-link" href="Rating.jsp">Reviews</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Discussion Forum</a>
+          <a class="nav-link" href="BeforeChat">Discussion Forum</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -136,14 +140,14 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="Profile">My Profile</a></li>
             <li><a class="dropdown-item" href="BeforeUpdate">Account Settings</a></li>
-            <li><a class="dropdown-item" href="#">Logout</a></li>
+            <li><a class="dropdown-item" href="LogoutServlet">Logout</a></li>
           </ul>
         </li>
       </ul>
 
       <!-- Search Button on the Right -->
-      <form class="d-flex ms-auto">
-        <input class="form-control me-2" type="search" placeholder="Hostel review" aria-label="Search">
+      <form class="d-flex ms-auto" action="HostelSearch">
+        <input class="form-control me-2" name="hostel-search" type="search" placeholder="Hostel review" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
     </div>
@@ -153,7 +157,7 @@
 <!-- Buttons for Find Roomie and Find Hostel -->
 <div class="home-buttons">
   <button class="btn find-roomie" onclick="window.location.href='Match';">Find Roomie</button>
-  <button class="btn find-hostel" onclick="window.location.href='Map';">Find Hostel</button>
+ <button class="btn find-hostel" onclick="window.location='public/HostelGeoMap.html';">Find Hostel</button>
 </div>
 
 <div class="container mt-5">

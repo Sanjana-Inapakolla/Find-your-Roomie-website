@@ -1,26 +1,26 @@
-package form;
+package chat;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import form.DbConnect;
 
 /**
- * Servlet implementation class Match
+ * Servlet implementation class BeforeChat
  */
-@WebServlet("/Match")
-public class Match extends HttpServlet {
+@WebServlet("/BeforeChat")
+public class BeforeChat extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Match() {
+    public BeforeChat() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,20 +29,13 @@ public class Match extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		String email = session.getAttribute("email").toString();
-		System.out.println("Match.java "+email);
+		// TODO Auto-generated method stub
 		DbConnect db=new DbConnect();
-		User cur_user=db.getUserDetails(email);
-		Matching m=new Matching();
-		List<Pair> matches=m.getMatches(cur_user);
-		System.out.print(matches.size()>0);
-		System.out.print(matches.get(0).getUser().getName());
-		
-		request.setAttribute("matches", matches);
-		System.out.print("attribute set");
-		request.getRequestDispatcher("Matches.jsp").forward(request, response);
-		
+		List<Pair_messages> messages=new ArrayList<>();
+		messages=db.retrieveMessages();
+		request.setAttribute("chats", messages);
+		System.out.print("request set");
+		request.getRequestDispatcher("chat.jsp").forward(request, response);
 	}
 
 	/**

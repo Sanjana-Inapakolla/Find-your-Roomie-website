@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
 /**
@@ -37,6 +39,9 @@ public class AfterUpdate extends HttpServlet {
 		User updatedUser=new User(name,email,contact,city,area,job);
 		DbConnect db=new DbConnect();
 		
+		HttpSession session = request.getSession();
+		@SuppressWarnings("unused")
+		String user_email = session.getAttribute("email").toString();
 		
 		boolean isUpdated=db.updateUserProfile(updatedUser);
 		if (isUpdated) {

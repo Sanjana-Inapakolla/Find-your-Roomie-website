@@ -21,6 +21,7 @@ public class User {
 	    private String drink;
 	    private String diet;
 
+	    //for user creation
 	    public User(String email, String name, String gender, java.sql.Date dob, String contact, int age, String city, String area, String job, String native_place, String mother_tongue, String smoke, String drink, String diet) {
 	        this.email=email;
 	        this.name = name;

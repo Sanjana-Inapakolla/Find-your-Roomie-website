@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -71,10 +72,12 @@ public class Submit extends HttpServlet {
 	        String smoke=request.getParameter("smoking");
 	        String drink=request.getParameter("drinking");
 	        String diet=request.getParameter("diet");
-	       // String email=request.getParameter("email");
-	        String email="khloe@gmail.com";
 	        
-	        System.out.print("data received");
+	        HttpSession session = request.getSession();
+			Object em = session.getAttribute("email");
+			String email = em.toString();
+			System.out.print("data received");
+			session.setAttribute("name", name);
 	       
 	        User curUser=new User(email,name,gender,dob,phone,age,city,area,occupation,nativeplace,motherTongue,smoke,drink,diet);
 	        System.out.print("user created");
