@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roommate Finder</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="container">
+    <img src="images/logo.png" height =172 width=350>
+        <div class="form-container">
+            <div class="form-switch">
+                <button class="switch-btn active" id="login-btn">Login</button>
+                <button class="switch-btn" id="signup-btn">Sign Up</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="login-form" class="form active" action="auth/login">
+                <h2>Login</h2>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit" id="login" value="login">Login</button>
+            </form>
+
+            <!-- Sign Up Form -->
+            <form id="signup-form" class="form" action="auth/register"> 
+                <h2>Sign Up</h2>
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="email" name="signupemail" placeholder="Email" required>
+                <input type="password" name="signuppassword" placeholder="Password" required>
+                <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
+                <button type="submit" id="signup" value="signup">Sign Up</button>
+            </form>
+            <div id="error"></div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        document.getElementById('login-btn').addEventListener('click', function() {
+    	$('#error').text("");
+        document.getElementById('login-form').classList.add('active');
+        document.getElementById('signup-form').classList.remove('active');
+        document.getElementById('login-btn').classList.add('active');
+        document.getElementById('signup-btn').classList.remove('active');
+    });
+
+    document.getElementById('signup-btn').addEventListener('click', function() {
+    	$('#error').text("");
+        document.getElementById('signup-form').classList.add('active');
+        document.getElementById('login-form').classList.remove('active');
+        document.getElementById('signup-btn').classList.add('active');
+        document.getElementById('login-btn').classList.remove('active');
+    });
+    $(document).ready(function() {
+        // Attach the click event directly to the submit button
+        $('#signup').click(function(event) {
+            event.preventDefault();  // Prevent form submission
+            $('#error').text("");  // Clear previous error
+
+            // Get values from the form inputs
+            var email = $('input[name=signupemail]').val();
+            var username = $('input[name="username"]').val();
+            var password = $('input[name="signuppassword"]').val();
+            var confirmPassword = $('input[name="confirmPassword"]').val();
+            if (!password) { console.log("Password is empty."); }
+
+            // Password validation
+            var passwordValidation = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
+
+            // Validate the password format
+            if (!passwordValidation.test(password)) {
+                $('#error').text("Password must be between 8-20 characters and contain at least one letter, one digit, and one special character.");
+                console.log('Password format invalid');
+                return false;
+            } else if (confirmPassword !== password) {
+                $('#error').text("Passwords must match!");
+                console.log('Passwords do not match');
+                return false;
+            } else {
+                $('#error').text(""); // Clear previous error
+
+                // If validation passes, submit the data via AJAX
+                $.ajax({
+                    url: 'auth/register',
+                    method: 'POST',
+                    data: {
+                        username: username,
+                        password: password,
+                        email: email
+                    },
+                    complete: function(jqXHR) {
+                        if (jqXHR.status === 200) {
+                            alert("Signup successful!");
+                            window.location = "form.html"
+                        } else {
+                            if(jqXHR.status=== 409){
+                            	alert("Username or email already exists")
+                            }
+                            else{
+                            	alert("Something went wrong!")
+                            }
+                        }
+                    },
+                    error: function() {
+                        alert('Error connecting to server.');
+                    }
+                });
+            }
+        });
+        $('#login').click(function(event){
+        	event.preventDefault();
+        	
+        	var email = $('input[name="email"]').val()
+        	var password = $('input[name="password"]').val()
+        	$('#error').text("");
+        	$.ajax({
+        		url: 'auth/login',
+        		method: 'POST',
+        		data: {
+        			email: email,
+        			password: password
+        			},
+        		complete: function(jqXHR){
+        			if(jqXHR.status === 200){
+        				alert('login successful!')
+        				window.location = "home.html"
+        			}
+        			else if(jqXHR.status===404){
+        				alert('login failed! No such user found')
+        			}
+        			else if(jqXHR.status===401){
+        				alert('Wrong Password!')
+        			}
+        			else{
+        				alert('Something went wrong!')
+        			}
+        		}
+        	})
+        });
+    });
+
+    </script>
+</body>
+</html>
