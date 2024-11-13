@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find Your Roomie</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="image-container">
+		<img src="images\logo.png" alt="logo"
+			width="200" height="200">
+
+		<div class="container">
+			<div class="header-container">
+				<div class="header-text">
+					<h1>Find Your Roomie</h1>
+				</div>
+				<img src="images/roomies.gif" alt="roomies" width="300">
+			</div>
+
+			
+<div class="form">
+			<form id="application-form" action='Submit' method="post" >
+				<fieldset>
+					<legend>Personal Information</legend>
+					<label for="name">Name:</label> 
+					<input type="text" id="name" name="name" required> 
+					<label for="contact">Contact Number:</label>
+					<input type="tel" id="phone" name="phone" pattern="[7-9][0-9]{9}" required> 
+					<label for="dob">Date of Birth:</label> 
+					<input type="date" id="dob" name="dob" required> 
+					<label for="age">Age:</label> 
+					<input type="number" id="age" name="age" min=18 required>
+
+					<label for="native-place">Native place:</label> 
+					<input type="text" id="native-place" name="native-place" required> 
+					<label for="mother-tongue">Mother tongue:</label> 
+					<input type="text" id="mother-tongue" name="mother-tongue" required> <br>
+					<div class="checkbox-group">
+						<label>Category:</label> 
+						<input type="radio" id="female" name="gender" value="female" required> 
+						<label for="female">Female</label>
+						<input type="radio" id="male" name="gender" value="male" required>
+						<label for="male">Male</label> 
+						<input type="radio" id="others" name="gender" value="others" required> 
+						<label for="others">Others</label>
+					</div>
+
+					<label for="city">Where to stay?</label> 
+					<select name="city" id="city" onchange="loadAreas()" required>
+						<option value="">Select City</option>
+						<option value="pune">Pune</option>
+						<option value="bangalore">Bangalore</option>
+						<option value="chennai">Chennai</option>
+					</select> 
+					
+					<label for="area">Area:</label> 
+					<select name="area" id="area" required>
+						<option value="">Select Area</option>
+					</select> 
+					
+					<label for="occupation">Occupation:</label> 
+					<select name="occupation" id="occupation" onchange="loadDetails()" required>
+						<option value="">Select Occupation</option>
+						<option value="student">Student</option>
+						<option value="working">Working professional</option>
+						<option value="graduate">Graduate</option>
+					</select>
+					
+					<div id="occ-details">
+					</div>
+
+
+				</fieldset>
+
+				<fieldset>
+					<legend>Lifestyle Habits</legend>
+					<div class="smoking-class">
+						<label>Smoking:</label> 
+						<input type="radio" id="smoke-yes" name="smoking" value="yes" required> 
+						<label for="yes">Yes</label>
+						<input type="radio" id="smoke-no" name="smoking" value="no" required>
+						<label for="no">No</label>
+					</div>
+
+					<div class="drinking-class">
+						<label>Drinking:</label> 
+						<input type="radio" id="drink-yes" name="drinking" value="yes" required> 
+						<label for="yes">Yes</label>
+						<input type="radio" id="drink-no" name="drinking" value="no" required>
+						<label for="no">No</label>
+					</div>
+
+					<div class="diet-class">
+						<label>Diet:</label> 
+						<input type="radio" id="diet-veg" name="diet" value="veg" required> 
+						<label for="veg">Veg</label> 
+						<input type="radio" id="diet-non-veg" name="diet" value="nonveg" required>
+						<label for="nonveg">Non veg</label> 
+						<input type="radio" id="diet-vegan" name="diet" value="vegan" required> 
+						<label for="vegan">Vegan</label>
+					</div>
+				</fieldset>
+
+				<fieldset>
+					<legend>Profile</legend>
+
+					<label for="profile-photo">Upload profile photo (JPG/PNG,
+						max 20MB):</label> 
+						<input type="file" id="profile-photo" name="profile-photo" accept=".jpg, .jpeg, .png">
+				</fieldset>
+
+				<button type="submit" >Submit Application</button>
+			</form>
+			</div>
+		</div>
+	</div>
+
+	<script>
+    
+    const areas = {
+            pune: ["Kothrud", "Viman Nagar", "Pune Camp", "Baner", "Hinjewadi","FC Road","Karve Nagar"],
+            bangalore: ["Koramangala", "Indiranagar", "Whitefield", "Jayanagar", "MG Road"],
+            chennai: ["Adyar", "T Nagar", "Mylapore", "Anna Nagar", "Besant Nagar"]
+        };
+
+    function loadAreas(){
+    	var city = document.getElementById('city').value;
+        var areaSelect = document.getElementById('area');
+        areaSelect.innerHTML = "<option value=''>Select Area</option>"; 
+        if (city) {
+            var cityAreas = areas[city] || [];
+            cityAreas.forEach(function(area) {
+                var option = document.createElement('option');
+                option.value = area;
+                option.text = area;
+                areaSelect.appendChild(option);
+            });
+        }
+    }
+    
+    function loadDetails(){
+    	var occupation=document.getElementById('occupation').value;
+    	var xhttp= new XMLHttpRequest();
+    	xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("occ-details").innerHTML = this.responseText;  
+            }
+        };
+        xhttp.open("GET", "Submit?occupation=" + occupation, true);  
+        xhttp.send();
+    }
+    
+   // function validate(){
+    	//var isValid=true;
+    	// var age=document.getElementById('age').value;
+    	//console.log("You should be above 18 years")
+    	 
+    	// return isValid;
+  //  }
+   //onsubmit="return validate()"
+    
+   
+    
+   
+    </script>
+
+</body>
+</html>
